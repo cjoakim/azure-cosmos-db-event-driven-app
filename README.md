@@ -1,6 +1,7 @@
 # azure-cosmos-db-event-driven-app
 
 Example "Event-Driven" application with Azure Cosmos DB, Functions, and Service Bus.
+
 Implemented in Node.js and TypeScript.
 
 The instructions provided here focus on Windows 11, but similar commands
@@ -19,7 +20,7 @@ function_app\    This directory contains a Cosmos DB Change-Feed consumer Azure 
   - database name of your choice, such as **dev**
   - container name of your choice, such as **events**
     - Partition key of this container should be **/pk**
-    - Minimal Request Unit setting is adequate
+    - Minimal Request Unit (RU) setting is adequate
 - **Azure Service Bus**
   - standard tier is adequate
   - queue name of your choice, such as **events**
@@ -48,10 +49,6 @@ such as your HOMEPATH or HOME.  Then clone this repo as follows:
 
 ```
 > git clone https://github.com/cjoakim/azure-cosmos-db-event-driven-app.git
-
-then
-
-> cd azure-cosmos-db-event-driven-app
 ```
 
 ## Environment Variables
@@ -172,7 +169,42 @@ console-app@0.1.0 C:\Users\chjoakim\github\azure-cosmos-db-event-driven-app\cons
 Edit file **generate_events.ps1** as necessary, then execute it as follows.
 
 ```
-PS ...\console_app> generate_events.ps1
+PS ...\console_app> .\generate_events.ps1
+
+dbname is dev per command-line arg
+cname is events per command-line arg
+newIds is true per command-line arg
+sleepMs is 3000 per command-line arg
+50 airports loaded from infile data/world-airports-50.json
+---
+-
+{"name":"Lester B Pearson Intl","city":"Toronto","country":"Canada","iata_code":"YYZ","latitude":"43.677223","longitude":"-79.630556","altitude":"569","timezone_num":"-5","timezone_code":"America/Toronto","location":{"type":"Point","coordinates":[-79.630556,43.677223]},"id":"717524a0-6f0b-477d-9dab-a7e023fa5056","pk":"YYZ"}
+idx: 0, createResp: {
+  "name": "Lester B Pearson Intl",
+  "city": "Toronto",
+  "country": "Canada",
+  "iata_code": "YYZ",
+  "latitude": "43.677223",
+  "longitude": "-79.630556",
+  "altitude": "569",
+  "timezone_num": "-5",
+  "timezone_code": "America/Toronto",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      -79.630556,
+      43.677223
+    ]
+  },
+  "id": "717524a0-6f0b-477d-9dab-a7e023fa5056",
+  "pk": "YYZ",
+  "_rid": "gm8hAIWrwNkcAAAAAAAAAA==",
+  "_self": "dbs/gm8hAA==/colls/gm8hAIWrwNk=/docs/gm8hAIWrwNkcAAAAAAAAAA==/",
+  "_etag": "\"ff00c1ea-0000-0100-0000-6553c6410000\"",
+  "_attachments": "attachments/",
+  "_ts": 1699989057
+}
+...
 ```
 
 It will read the **data/world-airports-50.json** file in this repo
