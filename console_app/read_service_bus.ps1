@@ -5,4 +5,4 @@
 
 tsc
 
-node .\dist\index.js readServiceBusQueue --sleep-ms:1000 --batch-size:3 --max-batches:5
+node .\dist\index.js readServiceBusQueue --sleep-ms:500 --batch-size:3 --max-batches:5

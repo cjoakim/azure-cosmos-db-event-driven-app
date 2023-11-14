@@ -6,4 +6,4 @@
 
 tsc
 
-node .\dist\index.js createChangeFeedEvents dev events --new-ids --sleep-ms:3000
+node .\dist\index.js createChangeFeedEvents dev events --new-ids --sleep-ms:500

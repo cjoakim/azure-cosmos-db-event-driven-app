@@ -136,8 +136,10 @@ async function readServiceBusQueue() : Promise<void> {
             break;
         }
         else {
+            console.log('---');
             console.log(util.format('Received %s messages', messages.length));
             for (let i = 0; i < messages.length; i++) {
+                console.log('-');
                 console.log(messages[i].body);
             }
         }
