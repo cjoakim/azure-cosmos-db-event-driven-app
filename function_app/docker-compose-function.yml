@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  web:
+    image: cjoakim/azure-cosmos-db-cf-ts-func
+    environment:
+      AZURE_COSMOSDB_NOSQL_CONN_STRING1: $AZURE_COSMOSDB_NOSQL_CONN_STRING1
+      AZURE_COSMOSDB_NOSQL_DB:           $AZURE_COSMOSDB_NOSQL_DB
+      AZURE_COSMOSDB_NOSQL_CONTAINER:    $AZURE_COSMOSDB_NOSQL_CONTAINER
+      AZURE_FUNCTION_MAX_ITEMS:          1
+      AZURE_SVCBUS_CONN_STRING:          $AZURE_SVCBUS_CONN_STRING
+      AZURE_SVCBUS_QUEUE:                $AZURE_SVCBUS_QUEUE
+    command: node ./dist/src/cosmosDBTrigger.js
+
+# NOTE: This file is a work-in-progress, not yet working.
+#
+# docker compose -f docker-compose-function.yml up
+# docker compose -f docker-compose-function.yml down

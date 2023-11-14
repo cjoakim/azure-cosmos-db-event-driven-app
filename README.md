@@ -263,3 +263,20 @@ This program will simply read and display the messages from
 the Azure Service Bus queue.  These messages were created 
 by the Change-feed Azure Function.
 
+---
+
+## Deployment
+
+### Build the Azure Function Docker Image
+
+```
+PS ...\function_app> .\build-docker-image.ps1
+docker build...
+docker ls image...
+REPOSITORY                           TAG       IMAGE ID       CREATED         SIZE
+cjoakim/azure-cosmos-db-cf-ts-func   latest    50d411a2b4d0   3 seconds ago   2.39GB
+```
+
+### Deploy to Azure Container Apps
+
+https://learn.microsoft.com/en-us/azure/azure-functions/functions-deploy-container-apps?tabs=acr%2Cbash&pivots=programming-language-typescript
