@@ -209,6 +209,9 @@ idx: 0, createResp: {
 
 It will read the **data/world-airports-50.json** file in this repo
 and write each airport as a document to your Cosmos DB container.
+It logs both the Airport as read from the file, and also the
+resulting Cosmos DB response document.
+
 The Azure Function should be triggered by these new documents.
 
 ### Service Bus Consumer

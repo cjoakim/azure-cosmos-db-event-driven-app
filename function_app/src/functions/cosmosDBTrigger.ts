@@ -15,7 +15,6 @@ let maxItemsPerInvocation : number = maxItemsAsNumber(maxItems);
 // Configure the Azure Service Bus output queue
 let svcBusConnStr : string = process.env['AZURE_SVCBUS_CONN_STRING'] || '?';
 let svcBusQueue   : string = process.env['AZURE_SVCBUS_QUEUE'] || '?';
-let firstEvent : boolean = true;
 const sbClient : ServiceBusClient = new ServiceBusClient(svcBusConnStr);
 const sbSender : ServiceBusSender = sbClient.createSender(svcBusQueue);
 
@@ -23,10 +22,6 @@ console.log(`Cosmos DB dbname: ${dbname}, cname: ${cname}, maxItemsPerInvocation
 console.log(`Service Bus queue name: ${svcBusQueue}`);
 
 export async function cosmosDBEventHandler(documents: unknown[], context: InvocationContext): Promise<void> {
-    // if (firstEvent) {
-    //     await new Promise(f => setTimeout(f, 1000));  // pause to allow the ServiceBusClient to connect
-    //     firstEvent = false;
-    // }
     if (documents) {
         if (documents.length > 0) {
             context.log(`${documents.length} documents passed to this Function invocation`);
