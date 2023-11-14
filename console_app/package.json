@@ -1,34 +1,32 @@
 {
-    "name": "sqlts",
+    "name": "console-app",
     "private": true,
     "version": "0.1.0",
-    "description": "TODO",
+    "description": "Companion application to the Azure Function app in this repo",
     "engines": {
         "node": ">=18.7.0"
     },
     "scripts": {
         "build": "tsc",
-        "prebuild": "rimraf dist/",
-        "test": "jest --verbose"
+        "prebuild": "rimraf dist/"
     },
     "keywords": [
         "cosmosdb",
-        "typescript"
+        "typescript",
+        "console app"
     ],
     "author": "Chris Joakim",
     "license": "MIT",
     "dependencies": {
         "@azure/cosmos": "4.0.0",
         "@azure/identity": "3.3.0",
+        "@azure/service-bus": "^7.9.3",
         "azu-js": "^1.0.2",
         "uuid": "9.0.1"
     },
     "devDependencies": {
-        "@types/jest": "^29.5.4",
         "@types/node": "18.17.1",
         "@types/uuid": "9.0.1",
-        "jest": "^29.7.0",
-        "rimraf": "5.0.1",
-        "ts-jest": "^29.1.1"
+        "rimraf": "5.0.1"
     }
 }
