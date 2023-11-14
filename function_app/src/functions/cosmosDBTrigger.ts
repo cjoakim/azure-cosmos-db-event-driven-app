@@ -2,7 +2,6 @@ import { app, InvocationContext } from '@azure/functions';
 import {
     ServiceBusClient,
     ServiceBusMessage,
-    ServiceBusMessageBatch,
     ServiceBusSender } from "@azure/service-bus";
 
 // The Cosmos DB triggering database name, container name, and maxItemsPerInvocation
@@ -17,6 +16,7 @@ let svcBusConnStr : string = process.env['AZURE_SVCBUS_CONN_STRING'] || '?';
 let svcBusQueue   : string = process.env['AZURE_SVCBUS_QUEUE'] || '?';
 const sbClient : ServiceBusClient = new ServiceBusClient(svcBusConnStr);
 const sbSender : ServiceBusSender = sbClient.createSender(svcBusQueue);
+const retainAttributes : Array<string> = 'id,pk,country,city,latitude,longitude,altitude'.split(',');
 
 console.log(`Cosmos DB dbname: ${dbname}, cname: ${cname}, maxItemsPerInvocation: ${maxItemsPerInvocation}`);
 console.log(`Service Bus queue name: ${svcBusQueue}`);
@@ -40,16 +40,35 @@ export async function cosmosDBEventHandler(documents: unknown[], context: Invoca
     }
 }
 
+/**
+ * Processing logic:
+ * 1. Ignore documents where the country isn't 'United States'
+ * 2. Transform the Cosmos DB document into a smaller one for the Service Bus message
+ *    by retaining just a subset of the attributes.
+ * 3. Add a enqueueDate attribute to the message.
+ */
 async function processDocument(
     doc : object,
     context : InvocationContext,
     sbSender : ServiceBusSender) : Promise<void> {
 
-    let sbm : ServiceBusMessage = {
-        body: JSON.stringify(doc),
+    if ('country' in doc) {
+        if (doc['country'] === 'United States') {
+            let messageDoc = {};
+            for (let i = 0; i < retainAttributes.length; i++) {
+                let attr = retainAttributes[i];
+                if (attr in doc) {
+                    messageDoc[attr] = doc[attr];
+                }
+            }
+            messageDoc['enqueueDate'] = new Date().toISOString();
+            let sbm : ServiceBusMessage = {
+                body: JSON.stringify(messageDoc),
+            }
+            context.log(JSON.stringify(sbm, null, 2));
+            sbSender.sendMessages(sbm);
+        }  
     }
-    context.log(JSON.stringify(sbm, null, 2));
-    sbSender.sendMessages(sbm);
     return;
 }
 

@@ -1,7 +1,7 @@
 {
     "name": "console-app",
     "private": true,
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "Companion application to the Azure Function app in this repo",
     "engines": {
         "node": ">=18.7.0"
@@ -15,7 +15,7 @@
         "typescript",
         "console app"
     ],
-    "author": "Chris Joakim",
+    "author": "Chris Joakim, Microsoft",
     "license": "MIT",
     "dependencies": {
         "@azure/cosmos": "4.0.0",

@@ -138,6 +138,18 @@ Functions:
         cosmosDBTrigger1: cosmosDBTrigger
 
 For detailed output, run func with --verbose flag.
+
+...
+[2023-11-14T20:49:31.104Z] Executing 'Functions.cosmosDBTrigger1' (Reason='New changes on container events at 2023-11-14T20:49:31.1042339Z', Id=f9268dee-b4c8-4465-afcc-e1fa58e0ffba)
+[2023-11-14T20:49:31.107Z] 1 documents passed to this Function invocation
+[2023-11-14T20:49:31.108Z] Executed 'Functions.cosmosDBTrigger1' (Succeeded, Id=f9268dee-b4c8-4465-afcc-e1fa58e0ffba, Duration=3ms)
+[2023-11-14T20:49:31.107Z] {
+  "body": "{\"id\":\"f1765e83-0dd0-4eda-ba64-a832328d1df6\",\"pk\":\"MCO\",\"country\":\"United States\",\"city\":\"Orlando\",\"latitude\":\"28.429394\",\"longitude\":\"-81.308994\",\"altitude\":\"96\",\"enqueueDate\":\"2023-11-14T20:49:31.106Z\"}"
+}
+[2023-11-14T20:49:31.221Z] Executing 'Functions.cosmosDBTrigger1' (Reason='New changes on container events at 2023-11-14T20:49:31.2210260Z', Id=01a5e4ab-adb4-4a1e-9da4-91f9784f9c33)
+[2023-11-14T20:49:31.224Z] Executed 'Functions.cosmosDBTrigger1' (Succeeded, Id=01a5e4ab-adb4-4a1e-9da4-91f9784f9c33, Duration=3ms)
+[2023-11-14T20:49:31.224Z] 1 documents passed to this Function invocation
+...
 ```
 
 ---
@@ -176,33 +188,34 @@ cname is events per command-line arg
 newIds is true per command-line arg
 sleepMs is 3000 per command-line arg
 50 airports loaded from infile data/world-airports-50.json
+...
 ---
 -
-{"name":"Lester B Pearson Intl","city":"Toronto","country":"Canada","iata_code":"YYZ","latitude":"43.677223","longitude":"-79.630556","altitude":"569","timezone_num":"-5","timezone_code":"America/Toronto","location":{"type":"Point","coordinates":[-79.630556,43.677223]},"id":"717524a0-6f0b-477d-9dab-a7e023fa5056","pk":"YYZ"}
-idx: 0, createResp: {
-  "name": "Lester B Pearson Intl",
-  "city": "Toronto",
-  "country": "Canada",
-  "iata_code": "YYZ",
-  "latitude": "43.677223",
-  "longitude": "-79.630556",
-  "altitude": "569",
+{"name":"Orlando Intl","city":"Orlando","country":"United States","iata_code":"MCO","latitude":"28.429394","longitude":"-81.308994","altitude":"96","timezone_num":"-5","timezone_code":"America/New_York","location":{"type":"Point","coordinates":[-81.308994,28.429394]},"id":"f1765e83-0dd0-4eda-ba64-a832328d1df6","pk":"MCO"}
+idx: 48, createResp: {
+  "name": "Orlando Intl",
+  "city": "Orlando",
+  "country": "United States",
+  "iata_code": "MCO",
+  "latitude": "28.429394",
+  "longitude": "-81.308994",
+  "altitude": "96",
   "timezone_num": "-5",
-  "timezone_code": "America/Toronto",
+  "timezone_code": "America/New_York",
   "location": {
     "type": "Point",
     "coordinates": [
-      -79.630556,
-      43.677223
+      -81.308994,
+      28.429394
     ]
   },
-  "id": "717524a0-6f0b-477d-9dab-a7e023fa5056",
-  "pk": "YYZ",
-  "_rid": "gm8hAIWrwNkcAAAAAAAAAA==",
-  "_self": "dbs/gm8hAA==/colls/gm8hAIWrwNk=/docs/gm8hAIWrwNkcAAAAAAAAAA==/",
-  "_etag": "\"ff00c1ea-0000-0100-0000-6553c6410000\"",
+  "id": "f1765e83-0dd0-4eda-ba64-a832328d1df6",
+  "pk": "MCO",
+  "_rid": "gm8hAIWrwNn5AAAAAAAAAA==",
+  "_self": "dbs/gm8hAA==/colls/gm8hAIWrwNk=/docs/gm8hAIWrwNn5AAAAAAAAAA==/",
+  "_etag": "\"01015853-0000-0100-0000-6553dd560000\"",
   "_attachments": "attachments/",
-  "_ts": 1699989057
+  "_ts": 1699994966
 }
 ...
 ```
@@ -217,7 +230,26 @@ The Azure Function should be triggered by these new documents.
 ### Service Bus Consumer
 
 ```
-PS ...\console_app> read_service_bus.ps1
+PS ...\console_app> .\read_service_bus_queue.ps1
+
+...
+---
+Received 3 messages
+-
+{"id":"2ad12f0b-d857-46d6-8c06-65bf018fcd69","pk":"JFK","country":"United States","city":"New York","latitude":"40.639751","longitude":"-73.778925","altitude":"13","enqueueDate":"2023-11-14T20:49:25.617Z"}
+-
+{"id":"6f9ee543-2984-4b2f-8b8c-ae0f9a888acf","pk":"ORD","country":"United States","city":"Chicago","latitude":"41.978603","longitude":"-87.904842","altitude":"668","enqueueDate":"2023-11-14T20:49:25.731Z"}
+-
+{"id":"c10fd6b1-c01d-4478-a74c-3be68e83ce7c","pk":"CLT","country":"United States","city":"Charlotte","latitude":"35.214","longitude":"-80.943139","altitude":"748","enqueueDate":"2023-11-14T20:49:25.834Z"}
+---
+Received 2 messages
+-
+{"id":"b6cfb7e5-b874-479d-bd66-d9d99085f6b9","pk":"LAS","country":"United States","city":"Las Vegas","latitude":"36.080056","longitude":"-115.15225","altitude":"2141","enqueueDate":"2023-11-14T20:49:30.992Z"}
+-
+{"id":"f1765e83-0dd0-4eda-ba64-a832328d1df6","pk":"MCO","country":"United States","city":"Orlando","latitude":"28.429394","longitude":"-81.308994","altitude":"96","enqueueDate":"2023-11-14T20:49:31.106Z"}
+No more messages to receive
+closing the Service Bus receiver...
+closing the Service Bus client...
 ```
 
 This program will simply read and display the messages from
