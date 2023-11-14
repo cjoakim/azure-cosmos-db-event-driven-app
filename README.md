@@ -7,6 +7,13 @@ Implemented in Node.js and TypeScript.
 The instructions provided here focus on Windows 11, but similar commands
 can be executed on macOS or Linux workstations.
 
+## Architecture
+
+<p align="center">
+  <img src="docs/architecture.png" width="100%">
+</p>
+
+
 ## Directory Structure
 
 ```
