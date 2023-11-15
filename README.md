@@ -374,6 +374,9 @@ However, the Function can also be deployed as a Docker container.
   <img src="docs/azure-function-invocations.png" width="90%">
 </p>
 
+This above image shows that the Function invocations were successful, 
+and their durations ranged from 10-20ms.
+
 ---
 
 ### Build the Azure Function Docker Image
