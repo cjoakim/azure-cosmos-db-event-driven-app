@@ -377,6 +377,12 @@ However, the Function can also be deployed as a Docker container.
 This above image shows that the Function invocations were successful, 
 and their durations ranged from 10-20ms.
 
+### Observe that Messages have landed in the Azure Service Bus Queue
+
+<p align="center">
+  <img src="docs/azure-service-bus-messages.png" width="90%">
+</p>
+
 ---
 
 ### Build the Azure Function Docker Image
