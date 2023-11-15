@@ -368,6 +368,14 @@ However, the Function can also be deployed as a Docker container.
   <img src="docs/azure-function-portal-logging.png" width="90%">
 </p>
 
+### View the Azure Function Invocation History in Azure Portal
+
+<p align="center">
+  <img src="docs/azure-function-invocations.png" width="90%">
+</p>
+
+---
+
 ### Build the Azure Function Docker Image
 
 ```
