@@ -351,6 +351,13 @@ by the Change-feed Azure Function.
 
 ## Deployment
 
+At this time the Azure Function is deployed to Azure via **Visual Studio Code** tooling.
+The Azure Function runs within an Azure App Service.
+
+See https://learn.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=node-v4%2Cpython-v2%2Cisolated-process&pivots=programming-language-typescript
+
+However, the Function can also be deployed as a Docker container.
+
 ### Build the Azure Function Docker Image
 
 ```

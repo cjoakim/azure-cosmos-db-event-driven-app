@@ -15,7 +15,7 @@ export class EventTransformer {
      * a message object to be put on the Service Bus queue, or 'undefined'
      * if the document doesn't require further downstream processing.
      */
-    transform(doc : object) : object | undefined {
+    transform(doc : object, hostname : string) : object | undefined {
 
         if ('country' in doc) {
             if (doc['country'] === 'United States') {
@@ -26,8 +26,10 @@ export class EventTransformer {
                         message[attr] = doc[attr];
                     }
                 }
+                // Add several system-generated attributes for traceability:
                 message['_message_date'] = new Date().toISOString();
                 message['_message_version'] = '1';
+                message['_function_hostname'] = hostname;
                 return message;
             }  
         }

@@ -1,3 +1,7 @@
+
+import os from "os";
+import util from "util";
+
 import { app, InvocationContext } from '@azure/functions';
 import {
     ServiceBusClient,
@@ -17,10 +21,11 @@ let svcBusConnStr : string = process.env['AZURE_SVCBUS_CONN_STRING'] || '?';
 let svcBusQueue   : string = process.env['AZURE_SVCBUS_QUEUE'] || '?';
 const sbClient : ServiceBusClient = new ServiceBusClient(svcBusConnStr);
 const sbSender : ServiceBusSender = sbClient.createSender(svcBusQueue);
-//const retainAttributes : Array<string> = 'id,pk,country,city,latitude,longitude,altitude'.split(',');
+const hostname = os.hostname();
 
 console.log(`Cosmos DB dbname: ${dbname}, cname: ${cname}, maxItemsPerInvocation: ${maxItemsPerInvocation}`);
-console.log(`Service Bus queue name: ${svcBusQueue}`);
+console.log(`Service Bus queue name:  ${svcBusQueue}`);
+console.log(`Azure Function hostname: ${hostname}`);
 
 export async function cosmosDBEventHandler(documents: unknown[], context: InvocationContext): Promise<void> {
     if (documents) {
@@ -54,7 +59,7 @@ async function processDocument(
     sbSender : ServiceBusSender) : Promise<void> {
 
     let et = new EventTransformer();
-    let message = et.transform(doc);
+    let message = et.transform(doc, hostname);
     if (message !== undefined) {
         let sbm : ServiceBusMessage = {
             body: message,
