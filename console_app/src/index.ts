@@ -56,7 +56,7 @@ async function createChangeFeedEvents()  : Promise<void> {
         'AZURE_COSMOSDB_NOSQL_RW_KEY1');
 
     let fu = new FileUtil();
-    let infile : string = 'data/world-airports-50.json';
+    let infile : string = '../data/world-airports-50.json';
     let airports : Array<object> = fu.readJsonArrayFile(infile);
     console.log(util.format('%s airports loaded from infile %s', airports.length, infile));
 
