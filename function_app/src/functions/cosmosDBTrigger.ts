@@ -3,6 +3,7 @@ import {
     ServiceBusClient,
     ServiceBusMessage,
     ServiceBusSender } from "@azure/service-bus";
+import { EventTransformer } from "../EventTransformer";
 
 // The Cosmos DB triggering database name, container name, and maxItemsPerInvocation
 // are configured with the following environment variables:
@@ -16,7 +17,7 @@ let svcBusConnStr : string = process.env['AZURE_SVCBUS_CONN_STRING'] || '?';
 let svcBusQueue   : string = process.env['AZURE_SVCBUS_QUEUE'] || '?';
 const sbClient : ServiceBusClient = new ServiceBusClient(svcBusConnStr);
 const sbSender : ServiceBusSender = sbClient.createSender(svcBusQueue);
-const retainAttributes : Array<string> = 'id,pk,country,city,latitude,longitude,altitude'.split(',');
+//const retainAttributes : Array<string> = 'id,pk,country,city,latitude,longitude,altitude'.split(',');
 
 console.log(`Cosmos DB dbname: ${dbname}, cname: ${cname}, maxItemsPerInvocation: ${maxItemsPerInvocation}`);
 console.log(`Service Bus queue name: ${svcBusQueue}`);
@@ -52,22 +53,14 @@ async function processDocument(
     context : InvocationContext,
     sbSender : ServiceBusSender) : Promise<void> {
 
-    if ('country' in doc) {
-        if (doc['country'] === 'United States') {
-            let messageDoc = {};
-            for (let i = 0; i < retainAttributes.length; i++) {
-                let attr = retainAttributes[i];
-                if (attr in doc) {
-                    messageDoc[attr] = doc[attr];
-                }
-            }
-            messageDoc['enqueueDate'] = new Date().toISOString();
-            let sbm : ServiceBusMessage = {
-                body: JSON.stringify(messageDoc),
-            }
-            context.log(JSON.stringify(sbm, null, 2));
-            sbSender.sendMessages(sbm);
-        }  
+    let et = new EventTransformer();
+    let message = et.transform(doc);
+    if (message !== undefined) {
+        let sbm : ServiceBusMessage = {
+            body: message,
+        }
+        context.log(JSON.stringify(sbm, null, 2));
+        sbSender.sendMessages(sbm);
     }
     return;
 }

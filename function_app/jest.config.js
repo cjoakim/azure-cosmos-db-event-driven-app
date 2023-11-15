@@ -1,5 +1,5 @@
 module.exports = {
-    "roots": ["src/functions"],
+    "roots": ["src"],
     "transform": {"^.+\\.tsx?$": "ts-jest"},
     collectCoverage: true,
     coverageDirectory: 'coverage',
