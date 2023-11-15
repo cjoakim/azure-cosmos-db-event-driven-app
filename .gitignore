@@ -1,3 +1,12 @@
+## cj
+
+**/.vscode/
+**/dist/
+**/tmp/
+
+
+## generated entries
+
 # Logs
 logs
 *.log
